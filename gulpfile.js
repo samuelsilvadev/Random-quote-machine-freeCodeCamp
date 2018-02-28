@@ -47,7 +47,7 @@ gulp.task('imagemin', () => {
         .pipe(gulp.dest(_outputImages))
 });
 
-gulp.task('serve', ['sass', 'copy-fonts'], () => {
+gulp.task('serve', ['sass', 'copy-fonts', 'browserify'], () => {
 
     browserSync.init({
         server: {
@@ -56,11 +56,12 @@ gulp.task('serve', ['sass', 'copy-fonts'], () => {
     });
 
     gulp.watch(_inputFilesScss, ['sass']);
+    gulp.watch(_inputFilesJs, ['browserify']);
     gulp.watch('*.html').on('change', browserSync.reload);
 });
 
 gulp.task('browserify', () => {
-    return browserify('./js/app.js')
+    return browserify('./src/js/app.js')
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(_outputFilesJs));
