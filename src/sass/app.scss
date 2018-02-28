@@ -40,6 +40,8 @@ html {
 
     &__twitter{
         width: 10%;
+        height: auto;
+        cursor: pointer;
     }
 }
 
@@ -49,4 +51,5 @@ html {
     background-color: #ec5937;
     border: none;
     border-radius: .2rem;
+    cursor: pointer;
 }
