@@ -3,11 +3,18 @@
     const http = require('./HttpModule.js');
     const $buttonNewQuote = $('#newQuote');
     const $buttonShareTwitter = $('.quote__twitter > img');
+    const $elementQuote = $('.quote__text');
     const END_POINT_QUOTES = 'https://talaikis.com/api/quotes/random/';
     const END_POINT_SHARE_TWITTER = 'https://twitter.com/intent/tweet?text=';
     const handleQuote = function (obj) {
-        const $elementQuote = $('.quote__text');
+        $elementQuote.classList.add('quote__text--hiding')
         $elementQuote.innerText = obj.quote;
+        $buttonNewQuote.disabled = true;
+        setTimeout(() => {
+            $elementQuote.classList.remove('quote__text--hiding');
+            $buttonNewQuote.disabled = false;
+        }
+        , 5000);
     };
 
     $buttonNewQuote.addEventListener('click', () => {
@@ -16,7 +23,7 @@
     });
 
     $buttonShareTwitter.addEventListener('click', () => {
-        const textElementQuote = $('.quote__text').innerText;
+        const textElementQuote = $elementQuote.innerText;
         if (textElementQuote) {
             window.open(
                 END_POINT_SHARE_TWITTER + textElementQuote,
