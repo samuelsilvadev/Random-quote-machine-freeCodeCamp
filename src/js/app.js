@@ -13,16 +13,13 @@
         setTimeout(() => {
             $elementQuote.classList.remove('quote__text--hiding');
             $buttonNewQuote.disabled = false;
-        }
-        , 5000);
+        }, 5000);
     };
-
-    $buttonNewQuote.addEventListener('click', () => {
+    const listenerNewQuote = function () {
         http.get(END_POINT_QUOTES)
             .then(res => res.json().then(handleQuote));
-    });
-
-    $buttonShareTwitter.addEventListener('click', () => {
+    };
+    const listenerShareTwitter = function () {
         const textElementQuote = $elementQuote.innerText;
         if (textElementQuote) {
             window.open(
@@ -31,5 +28,8 @@
                 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=320, height=230'
             );
         }
-    });
+    };
+
+    $buttonNewQuote.addEventListener('click', listenerNewQuote);
+    $buttonShareTwitter.addEventListener('click', listenerShareTwitter);
 }());
