@@ -32,33 +32,22 @@ gulp.task('sass', () => {
         .pipe(browserSync.stream());
 });
 
-gulp.task('prefixe', () => {
+gulp.task('prefixe', gulp.series((done) => {
     gulp.src(`${_outputFilesCss}/**/*.css`)
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
         }))
         .pipe(gulp.dest(_outputFilesCss));
-});
+    done();
+}));
 
-gulp.task('imagemin', () => {
+gulp.task('imagemin', gulp.series((done) => {
     gulp.src(_inputImages)
         .pipe(imageMin())
         .pipe(gulp.dest(_outputImages))
-});
-
-gulp.task('serve', ['sass', 'copy-fonts', 'browserify'], () => {
-
-    browserSync.init({
-        server: {
-            baseDir: "./"
-        }
-    });
-
-    gulp.watch(_inputFilesScss, ['sass']);
-    gulp.watch(_inputFilesJs, ['browserify']);
-    gulp.watch('*.html').on('change', browserSync.reload);
-});
+    done();
+}));
 
 gulp.task('browserify', () => {
     return browserify('./src/js/app.js')
@@ -67,13 +56,14 @@ gulp.task('browserify', () => {
         .pipe(gulp.dest(_outputFilesJs));
 });
 
-gulp.task('babel', () =>
+gulp.task('babel', gulp.series((done) => {
     gulp.src(`${_outputFilesJs}/*.js`)
         .pipe(babel({
             presets: ['env']
         }))
         .pipe(gulp.dest(_outputFilesJs))
-);
+    done();
+}));
 
 gulp.task('compress', (cb) => {
     pump([
@@ -98,11 +88,25 @@ gulp.task('build:dev', () => {
     runSequence('clean', 'browserify', 'imagemin', 'copy-fonts', () => { });
 });
 
-gulp.task('copy-fonts', () => {
+gulp.task('copy-fonts', gulp.series((done) => {
     gulp.src('node_modules/font-awesome/fonts/**')
         .pipe(gulp.dest(_outputFilesFonts));
 
     gulp.src('node_modules/font-awesome/css/**')
         .pipe(gulp.dest(_outputFilesCss));
 
-});
+    done();
+}));
+
+gulp.task('serve', gulp.series(['sass', 'copy-fonts', 'browserify', 'imagemin'], () => {
+
+    browserSync.init({
+        server: {
+            baseDir: "./"
+        }
+    });
+
+    gulp.watch(_inputFilesScss, gulp.series('sass'));
+    gulp.watch(_inputFilesJs, gulp.series('browserify'));
+    gulp.watch('*.html').on('change', browserSync.reload);
+}));
