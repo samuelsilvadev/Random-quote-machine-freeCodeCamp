@@ -41,7 +41,7 @@ html {
 
 .quote {
     display: flex;
-    height: 25vh;
+    min-height: 25vh;
     padding: 2rem;
     padding-left: 3rem;
     &__text {
