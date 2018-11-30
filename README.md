@@ -4,7 +4,6 @@ This project is for challenge of FreeCodeCamp
 
 ## How to install
 
-- [sudo] npm install -g gulp
 - npm install
 - npm start 
 

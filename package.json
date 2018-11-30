@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "gulp serve",
+    "start": "./node_modules/.bin/gulp serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,13 +20,13 @@
   "homepage": "https://github.com/samuelsilvadev/Random-quote-machine-freeCodeCamp#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "browser-sync": "^2.24.4",
-    "browserify": "^15.2.0",
-    "gulp": "github:gulpjs/gulp#4.0",
+    "browser-sync": "^2.26.3",
+    "browserify": "^16.2.3",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^4.1.0",
     "gulp-babel": "^7.0.0",
     "gulp-clean": "^0.4.0",
-    "gulp-imagemin": "^4.1.0",
+    "gulp-imagemin": "^5.0.3",
     "gulp-sass": "^3.2.1",
     "gulp-uglify": "^3.0.0",
     "pump": "^2.0.1",
